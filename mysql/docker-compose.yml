@@ -2,26 +2,18 @@ version: '3'
 
 services:
   mysql:
-    image: mysql:latest
-    container_name: dev_mysql
-    restart: always
+    image: mysql:5.7
     ports:
-      # <Port exposed> : < MySQL Port running inside container>
       - "3306:3306"
     volumes:
-      - ./data/db:/var/lib/mysql
+      - ~/db/mysql:/var/lib/mysql
+      - ./config.cnf:/etc/mysql/conf.d/config.cnf
+      - ./init-dump:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_DATABASE: "db"
-      MYSQL_USER: "vantoan"
-      MYSQL_PASSWORD: "123456789x@X"
-      MYSQL_ROOT_PASSWORD: "123456789x@X"
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: "dev_phpmyadmin"
-    restart: always
-    ports:
-      - 9090:80
-    environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
+      TERM: xterm
+      APP_ENV: dev
+      MYSQL_USER: vantoan
+      MYSQL_PASSWORD: 123456789x@X
+      MYSQL_DATABASE: chat
+      MYSQL_ROOT_PASSWORD: 123456789x@X
+    container_name: mysql
