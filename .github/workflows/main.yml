@@ -27,6 +27,8 @@ jobs:
         script: |
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/github
+          cd /var/www/host-config
+          git pull origin main
           cd /var/www/host-config/tamduc/src/DentalClinicCRM_BE/
           git pull origin master
           cd /var/www/host-config/tamduc/src/DentalClinic_FE/
