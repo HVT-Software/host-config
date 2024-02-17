@@ -25,6 +25,8 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/github
           cd /var/www/host-config/tamduc/src/DentalClinicCRM_BE/
           git pull origin master
           cd /var/www/host-config/tamduc/src/DentalClinic_FE/
