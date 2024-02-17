@@ -31,5 +31,5 @@ jobs:
           git pull origin master
           cd /var/www/host-config/tamduc/src/DentalClinic_FE/
           git pull origin main
-          cd /var/www/host-config
+          cd /var/www/host-config/tamduc
           docker compose up --build -d 
