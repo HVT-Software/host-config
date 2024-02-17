@@ -25,9 +25,9 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
-          cd /var/www/host-congif/tamduc/src/DentalClinicCRM_BE/
+          cd /var/www/host-config/tamduc/src/DentalClinicCRM_BE/
           git pull origin master
-          cd /var/www/host-congif/tamduc/src/DentalClinic_FE/
+          cd /var/www/host-config/tamduc/src/DentalClinic_FE/
           git pull origin main
-          cd /var/www/host-congif
+          cd /var/www/host-config
           docker-compose up --build -d 
