@@ -1,3 +1,5 @@
 node_modules/
 certs/
 tamduc/src/
+/ventures/volumes/postgresql
+/ventures/volumes/pgadmin
