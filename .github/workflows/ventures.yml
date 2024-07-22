@@ -19,8 +19,4 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           host: ${{ secrets.SSH_HOST }}
           password: ${{ secrets.SSH_PASSWORD }}
-          script: /
-            cd /ctx/host-config \
-            git pull \
-            cd /ventures \
-            docker-compose up --build -d
+          script: "cd /ctx/host-config && git pull && cd /ventures && docker-compose up --build -d"
