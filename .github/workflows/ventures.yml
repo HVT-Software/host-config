@@ -13,12 +13,14 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to GitHub
+        uses: actions/checkout@v2
+
       - name: Deploy to Ventures
         uses: appleboy/ssh-action@master
         with:
-          username: ${{ secrets.SSH_USERNAME }}
           host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          script: "cd ~/ctx/host-config && git pull && cd /ventures && docker compose up --build -d"
+          script: "eval `ssh-agent -s` && ssh-add ~/.ssh/github && cd ~/ctx/host-config && git pull && cd /ventures && docker compose up --build -d"
