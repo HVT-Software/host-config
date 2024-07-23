@@ -5,8 +5,6 @@ services:
     restart: always
     container_name: ftpd-server
     image: stilliard/pure-ftpd:hardened
-    depends_on:
-      - wordpress
     ports:
       - 21:21
       - 20:20
