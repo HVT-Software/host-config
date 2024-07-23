@@ -13,7 +13,14 @@ services:
       - ./volumes/ftp/user:/home/user/:rw
       - './ftp/pass:/etc/pure-ftpd/passwd'
     environment:
-      PUBLICHOST: "5.181.217.245"
+      # SSL Configuration
+      VIRTUAL_HOST: ftp.hvantoan.io.vn
+      VIRTUAL_NETWORK: nginx-proxy
+      VIRTUAL_PORT: 5432
+      LETSENCRYPT_HOST: ftp.hvantoan.io.vn
+      LETSENCRYPT_EMAIL: toan01473@gmail.com
+      # FTP Configuration
+      PUBLICHOST: "ftp.hvantoan.io.vn"
       FTP_USER_NAME: "ftp"
       FTP_USER_PASS: "ftp"
       FTP_USER_HOME: "/home/user"
