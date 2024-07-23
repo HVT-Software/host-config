@@ -5,9 +5,14 @@ services:
     image: postgres:15-alpine
     container_name: postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: ventures
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ventures
+      - VIRTUAL_HOST=database.hvantoan.io.vn
+      - VIRTUAL_NETWORK=nginx-proxy
+      - VIRTUAL_PORT=5000
+      - LETSENCRYPT_HOST=database.hvantoan.io.vn
+      - LETSENCRYPT_EMAIL=toan01473@gmail.com
     volumes:
       - ./volumes/postgresql:/var/lib/postgresql/data
     ports:
@@ -20,9 +25,14 @@ services:
     container_name: pgadmin
     image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-it.vantoan@gmail.com}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-12345678x@X}
-      PGADMIN_CONFIG_SERVER_MODE: "False"
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL:-it.vantoan@gmail.com}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD:-12345678x@X}
+      - PGADMIN_CONFIG_SERVER_MODE=False
+      - VIRTUAL_HOST=pgadmin.hvantoan.io.vn
+      - VIRTUAL_NETWORK=nginx-proxy
+      - VIRTUAL_PORT=5000
+      - LETSENCRYPT_HOST=pgadmin.hvantoan.io.vn
+      - LETSENCRYPT_EMAIL=toan01473@gmail.com
     ports:
       - "${PGADMIN_PORT:-5050}:80"
     volumes:
