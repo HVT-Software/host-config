@@ -74,7 +74,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.05'
+          cpus: '0.3'
           memory: '128M'
     networks:
       - app_network
@@ -92,7 +92,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.05'
+          cpus: '0.1'
           memory: '64M'
     networks:
       - app_network
@@ -111,24 +111,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.05'
+          cpus: '0.1'
           memory: '64M'
-    networks:
-      - app_network
-
-  staging:
-    restart: always
-    image: itvantoan/cb_ventures:staging
-    container_name: ventures_staging
-    pull_policy: always
-    environment:
-      - VIRTUAL_HOST=ventures-staging.hvantoan.io.vn
-      - VIRTUAL_NETWORK=nginx-proxy
-      - VIRTUAL_PORT=5100
-      - LETSENCRYPT_HOST=ventures-staging.hvantoan.io.vn
-      - LETSENCRYPT_EMAIL=toan01473@gmail.com
-    ports:
-      - "5100:3000"
     networks:
       - app_network
 
