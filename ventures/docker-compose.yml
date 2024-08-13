@@ -129,6 +129,10 @@ services:
       - LETSENCRYPT_EMAIL=toan01473@gmail.com
     ports:
       - "5000:3000"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.7'
     networks:
       - app_network
 
