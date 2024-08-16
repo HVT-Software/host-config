@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.9"
 
 services:
   nginx-proxy:
@@ -57,6 +57,7 @@ services:
   postgres:
     image: postgres:15-alpine
     container_name: postgres
+    restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -68,9 +69,19 @@ services:
       - ./volumes/postgresql:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'" ]
+      interval: 5s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
     networks:
       - app_network
-    restart: on-failure
 
   master:
     restart: always
