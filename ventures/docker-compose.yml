@@ -100,6 +100,23 @@ services:
           cpus: '0.7'
     networks:
       - app_network
+  api:
+    restart: always
+    image: itvantoan/ventures_be:master
+    container_name: ventures_api
+    pull_policy: always
+    environment:
+      VIRTUAL_HOST: ventures.dc.hvantoan.io.vn
+      LETSENCRYPT_HOST: ventures.dc.hvantoan.io.vn
+      LETSENCRYPT_EMAIL: toan01473@gmail.com
+    ports:
+      - "8000:8000"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.7'
+    networks:
+      - app_network
 
 networks:
   app_network:
