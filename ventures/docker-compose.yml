@@ -1,27 +1,27 @@
 version: "3.9"
 
 services:
-  nginx-proxy:
-    image: jwilder/nginx-proxy
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - "/etc/nginx/vhost.d"
-      - "/usr/share/nginx/html"
-      - "/var/run/docker.sock:/tmp/docker.sock:ro"
-      - "/etc/nginx/certs"
-    networks:
-      - app_network
+  # nginx-proxy:
+  #   image: jwilder/nginx-proxy
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - "/etc/nginx/vhost.d"
+  #     - "/usr/share/nginx/html"
+  #     - "/var/run/docker.sock:/tmp/docker.sock:ro"
+  #     - "/etc/nginx/certs"
+  #   networks:
+  #     - app_network
 
-  letsencrypt-nginx-proxy-companion:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    volumes_from:
-      - "nginx-proxy"
-    networks:
-      - app_network
+  # letsencrypt-nginx-proxy-companion:
+  #   image: jrcs/letsencrypt-nginx-proxy-companion
+  #   volumes:
+  #     - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  #   volumes_from:
+  #     - "nginx-proxy"
+  #   networks:
+  #     - app_network
 
   ftp:
     restart: always
@@ -33,12 +33,11 @@ services:
       - 30000-30009:30000-30009
     volumes:
       - ./volumes/ftp/user:/home/user/:rw
-      - './ftp/pass:/etc/pure-ftpd/passwd'
+      - './volumes/ftp/pass:/etc/pure-ftpd/passwd'
     environment:
       # SSL Configuration
       VIRTUAL_HOST: ftp.hvantoan.io.vn
       LETSENCRYPT_HOST: ftp.hvantoan.io.vn
-      LETSENCRYPT_EMAIL: toan01473@gmail.com
       # FTP Configuration
       PUBLICHOST: "ftp.hvantoan.io.vn"
       FTP_USER_NAME: "ftp"
@@ -52,7 +51,7 @@ services:
       TLS_C: "VI"
       MAX_CONNECTIONS: "20"
     networks:
-      - app_network
+      - nginx-proxy
 
   postgres:
     image: postgres:15-alpine
@@ -62,9 +61,9 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: ventures
+      # SSL Configuration
       VIRTUAL_HOST: database.hvantoan.io.vn
       LETSENCRYPT_HOST: database.hvantoan.io.vn
-      LETSENCRYPT_EMAIL: toan01473@gmail.com
     volumes:
       - ./volumes/postgresql:/var/lib/postgresql/data
     ports:
@@ -81,17 +80,16 @@ services:
           cpus: '0.3'
           memory: 512M
     networks:
-      - app_network
+      - nginx-proxy
 
   master:
     restart: always
     image: itvantoan/cb_ventures:master
-    container_name: ventures_master
+    container_name: cb_ventures
     pull_policy: always
     environment:
       VIRTUAL_HOST: ventures.hvantoan.io.vn
       LETSENCRYPT_HOST: ventures.hvantoan.io.vn
-      LETSENCRYPT_EMAIL: toan01473@gmail.com
     ports:
       - "5000:3000"
     deploy:
@@ -99,16 +97,15 @@ services:
         limits:
           cpus: '0.7'
     networks:
-      - app_network
+      - nginx-proxy
   api:
     restart: always
     image: itvantoan/ventures_be:master
-    container_name: ventures_api
+    container_name: ventures_be
     pull_policy: always
     environment:
       VIRTUAL_HOST: ventures.dc.hvantoan.io.vn
       LETSENCRYPT_HOST: ventures.dc.hvantoan.io.vn
-      LETSENCRYPT_EMAIL: toan01473@gmail.com
     ports:
       - "8000:8000"
     deploy:
@@ -116,8 +113,8 @@ services:
         limits:
           cpus: '0.7'
     networks:
-      - app_network
+      - nginx-proxy
 
 networks:
-  app_network:
-    driver: bridge
+  nginx-proxy:
+    external: true
