@@ -11,6 +11,7 @@ services:
       # SSL Configuration
       - VIRTUAL_HOST=jaeger.hvantoan.io.vn
       - LETSENCRYPT_HOST=jaeger.hvantoan.io.vn
+      - VIRTUAL_PORT=16686
     ports:
       - 6831:6831/udp
       - 6832:6832/udp
