@@ -1,0 +1,74 @@
+version: "3.9"
+
+services:
+  ftp:
+    restart: always
+    container_name: ftpd-server
+    image: stilliard/pure-ftpd:hardened
+    ports:
+      - 21:21
+      - 20:20
+      - 30000-30009:30000-30009
+    volumes:
+      - ./volumes/ftp/user:/home/user/:rw
+      - './volumes/ftp/pass:/etc/pure-ftpd/passwd'
+    environment:
+      # SSL Configuration
+      VIRTUAL_HOST: ftp.hvantoan.io.vn
+      LETSENCRYPT_HOST: ftp.hvantoan.io.vn
+      # FTP Configuration
+      PUBLICHOST: "ftp.hvantoan.io.vn"
+      FTP_USER_NAME: "ftp"
+      FTP_USER_PASS: "ftp"
+      FTP_USER_HOME: "/home/user"
+      FTP_USER_UID: 33
+      FTP_USER_GID: 33
+      ADDED_FLAGS: "--tls=2"
+      TLS_CN: "**** FTP"
+      TLS_ORG: "*****"
+      TLS_C: "VI"
+      MAX_CONNECTIONS: "20"
+    networks:
+      - nginx-proxy
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ventures
+      # SSL Configuration
+      VIRTUAL_HOST: database.hvantoan.io.vn
+      LETSENCRYPT_HOST: database.hvantoan.io.vn
+    volumes:
+      - ./volumes/postgresql:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'" ]
+      interval: 5s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
+    networks:
+      - nginx-proxy
+
+  redis:
+    image: 'bitnami/redis:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - VIRTUAL_HOST=redis.dc.hvantoan.io.vn
+      - LETSENCRYPT_HOST=redis.dc.hvantoan.io.vn
+    networks:
+      - nginx-proxy
+
+networks:
+  nginx-proxy:
+    external: true
