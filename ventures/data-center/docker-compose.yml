@@ -63,7 +63,8 @@ services:
   redis:
     image: 'bitnami/redis:latest'
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_PASSWORD=vantoan # Set your Redis password here
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
       - VIRTUAL_HOST=redis.dc.hvantoan.io.vn
       - LETSENCRYPT_HOST=redis.dc.hvantoan.io.vn
     ports:
