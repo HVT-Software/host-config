@@ -46,12 +46,6 @@ services:
       - ./volumes/postgresql:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    healthcheck:
-      test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'" ]
-      interval: 5s
-      timeout: 60s
-      retries: 5
-      start_period: 80s
     deploy:
       resources:
         limits:
@@ -71,10 +65,12 @@ services:
     ports:
       - '6379:6379'
     volumes:
-      - './volumes/redis:/bitnami/redis/data'
+      - redis_data:/bitnami/redis/data # Use Docker-managed volume for data storage
+    user: "1001" # Run Redis with a user that has permission to write to directories
+    tmpfs:
+      - /opt/bitnami/redis/tmp
     networks:
       - nginx-proxy
-    user: "1001:1001"
 
 networks:
   nginx-proxy:
