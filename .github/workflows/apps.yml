@@ -1,10 +1,10 @@
-name: CD Ventures Project
+name: CD Apps
 
 on:
   push:
     branches: [main]
     paths:
-      - 'ventures/**'
+      - 'ventures/apps/**'
 
 jobs:
   deploy:
