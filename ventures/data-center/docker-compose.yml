@@ -66,6 +66,10 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
       - VIRTUAL_HOST=redis.dc.hvantoan.io.vn
       - LETSENCRYPT_HOST=redis.dc.hvantoan.io.vn
+    ports:
+      - '6379:6379'
+    volumes:
+      - './volumes/redis:/bitnami/redis/data'
     networks:
       - nginx-proxy
 
