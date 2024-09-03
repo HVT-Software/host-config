@@ -74,6 +74,7 @@ services:
       - './volumes/redis:/bitnami/redis/data'
     networks:
       - nginx-proxy
+    user: "1001:1001"
 
 networks:
   nginx-proxy:
