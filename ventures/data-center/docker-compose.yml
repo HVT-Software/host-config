@@ -58,8 +58,6 @@ services:
     container_name: redis_dc
     command: redis-server /usr/local/etc/redis/redis.conf
     environment:
-      - REDIS_PASSWORD=vantoan@123
-      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
       - VIRTUAL_HOST=redis.dc.hvantoan.io.vn
       - LETSENCRYPT_HOST=redis.dc.hvantoan.io.vn
     ports:
