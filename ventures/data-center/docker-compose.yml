@@ -53,22 +53,20 @@ services:
           memory: 512M
     networks:
       - nginx-proxy
-
   redis:
-    image: docker.io/bitnami/redis:7.4
+    image: redis:7.4
     container_name: redis_dc
+    command: redis-server /usr/local/etc/redis/redis.conf
     environment:
-      - REDIS_PASSWORD=vantoan # Set your Redis password here
+      - REDIS_PASSWORD=vantoan@123
       - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
       - VIRTUAL_HOST=redis.dc.hvantoan.io.vn
       - LETSENCRYPT_HOST=redis.dc.hvantoan.io.vn
     ports:
-      - '6379:6379'
+      - "6379:6379"
     volumes:
-      - redis_data:/bitnami/redis/data # Use Docker-managed volume for data storage
-    user: "1001" # Run Redis with a user that has permission to write to directories
-    tmpfs:
-      - /opt/bitnami/redis/tmp
+      - ./data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
     networks:
       - nginx-proxy
 
