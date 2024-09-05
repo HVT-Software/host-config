@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'ventures/jaeger/**'
+      - 'jaeger/**'
 
 jobs:
   deploy:
@@ -18,11 +18,11 @@ jobs:
       - name: Login to GitHub
         uses: actions/checkout@v2
 
-      - name: Deploy to Ventures
+      - name: Rebuild Jaeger
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           port: 22
-          script: "eval `ssh-agent -s` && ssh-add ~/.ssh/github && cd ~/ctx/host-config && git pull && cd ventures/jaeger && docker compose up --remove-orphans --build -d"
+          script: "eval `ssh-agent -s` && ssh-add ~/.ssh/github && cd ~/ctx/host-config && git pull && cd jaeger && docker compose up --remove-orphans --build -d"
