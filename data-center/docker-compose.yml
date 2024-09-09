@@ -10,8 +10,9 @@ services:
       - 20:20
       - 30000-30009:30000-30009
     volumes:
-      - ./volumes/ftp/user:/home/user/:rw
-      - './volumes/ftp/pass:/etc/pure-ftpd/passwd'
+      - "./volumes/ftp/user:/home/user/:rw"
+      - "./volumes/ftp/pass:/etc/pure-ftpd/passwd"
+      - "/var/ftp:/home/user:rw"
     environment:
       # SSL Configuration
       VIRTUAL_HOST: ftp.hvantoan.io.vn
@@ -23,7 +24,7 @@ services:
       FTP_USER_HOME: "/home/user"
       FTP_USER_UID: 33
       FTP_USER_GID: 33
-      ADDED_FLAGS: "--tls=2"
+      ADDED_FLAGS: "--tls=2 --createhomedir"
       TLS_CN: "**** FTP"
       TLS_ORG: "*****"
       TLS_C: "VI"
@@ -49,7 +50,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.3'
+          cpus: "0.3"
           memory: 512M
     networks:
       - nginx-proxy
