@@ -34,6 +34,8 @@ services:
       LETSENCRYPT_HOST: ventures.dc.hvantoan.io.vn
     ports:
       - "8000:8000"
+    volumes:
+      - ./production/appsettings.json:/app/appsettings.json
     deploy:
       resources:
         limits:
