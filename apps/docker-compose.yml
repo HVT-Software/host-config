@@ -17,10 +17,6 @@ services:
       - "3000:3000"
     env_file:
       - .env
-    deploy:
-      resources:
-        limits:
-          cpus: '0.7'
     networks:
       - nginx-proxy
 
@@ -30,16 +26,12 @@ services:
     container_name: ventures_be
     pull_policy: always
     environment:
-      VIRTUAL_HOST: ventures-dc.hvantoan.io.vn
-      LETSENCRYPT_HOST: ventures-dc.hvantoan.io.vn
+      VIRTUAL_HOST: ventures.dc.hvantoan.io.vn
+      LETSENCRYPT_HOST: ventures.dc.hvantoan.io.vn
     ports:
       - "8000:8000"
     volumes:
       - ./production/appsettings.json:/app/appsettings.json
-    deploy:
-      resources:
-        limits:
-          cpus: '0.7'
     networks:
       - nginx-proxy
 
