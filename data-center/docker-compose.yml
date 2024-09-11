@@ -15,10 +15,10 @@ services:
       - "/var/ftp:/home/user:rw"
     environment:
       # SSL Configuration
-      VIRTUAL_HOST: ftp.hvantoan.io.vn
-      LETSENCRYPT_HOST: ftp.hvantoan.io.vn
+      VIRTUAL_HOST: ftp-dc.hvantoan.io.vn
+      LETSENCRYPT_HOST: ftp-dc.hvantoan.io.vn
       # FTP Configuration
-      PUBLICHOST: "ftp.hvantoan.io.vn"
+      PUBLICHOST: "ftp-dc.hvantoan.io.vn"
       FTP_USER_NAME: "ftp"
       FTP_USER_PASS: "ftp"
       FTP_USER_HOME: "/home/user"
@@ -41,8 +41,8 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: ventures
       # SSL Configuration
-      VIRTUAL_HOST: database.hvantoan.io.vn
-      LETSENCRYPT_HOST: database.hvantoan.io.vn
+      VIRTUAL_HOST: database-dc.hvantoan.io.vn
+      LETSENCRYPT_HOST: database-dc.hvantoan.io.vn
     volumes:
       - ./volumes/postgresql:/var/lib/postgresql/data
     ports:
@@ -59,8 +59,8 @@ services:
     container_name: redis_dc
     command: redis-server /usr/local/etc/redis/redis.conf
     environment:
-      - VIRTUAL_HOST=redis.dc.hvantoan.io.vn
-      - LETSENCRYPT_HOST=redis.dc.hvantoan.io.vn
+      - VIRTUAL_HOST=redis-dc.hvantoan.io.vn
+      - LETSENCRYPT_HOST=redis-dc.hvantoan.io.vn
     ports:
       - "6379:6379"
     volumes:

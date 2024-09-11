@@ -30,8 +30,8 @@ services:
     container_name: ventures_be
     pull_policy: always
     environment:
-      VIRTUAL_HOST: ventures.dc.hvantoan.io.vn
-      LETSENCRYPT_HOST: ventures.dc.hvantoan.io.vn
+      VIRTUAL_HOST: ventures-dc.hvantoan.io.vn
+      LETSENCRYPT_HOST: ventures-dc.hvantoan.io.vn
     ports:
       - "8000:8000"
     volumes:
