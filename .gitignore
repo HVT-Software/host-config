@@ -3,3 +3,5 @@ certs/
 tamduc/src/
 /ventures/volumes/postgresql
 /ventures/volumes/pgadmin
+/data-center/data
+/data-center/volumes
