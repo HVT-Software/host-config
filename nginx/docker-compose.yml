@@ -9,12 +9,13 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./config/ftp.conf:/etc/nginx/conf.d/ftp.conf:ro
-      - ../data-center/volumes/ftp/user/images:/var/html/images:ro
+      - /volumes/ftp/user/images:/var/html/images:ro
       - letsencrypt-certs:/etc/nginx/certs
       - letsencrypt-vhost-d:/etc/nginx/vhost.d
       - letsencrypt-html:/usr/share/nginx/html
     networks:
       - nginx-proxy
+      
   letsencrypt-proxy:
     image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: letsencrypt-proxy
