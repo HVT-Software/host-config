@@ -10,8 +10,8 @@ services:
       - "20:20"
       - "30000-30009:30000-30009"
     volumes:
-      - "./volumes/ftp/user:/home/user/:rw"
-      - "./volumes/ftp/pass:/etc/pure-ftpd/passwd"
+      - "/volumes/ftp/user:/home/user/:rw"
+      - "/volumes/ftp/pass:/etc/pure-ftpd/passwd"
     environment:
       # SSL Configuration
       VIRTUAL_HOST: ftp.dc.hvantoan.io.vn
@@ -43,16 +43,16 @@ services:
       VIRTUAL_HOST: database.dc.hvantoan.io.vn
       LETSENCRYPT_HOST: database.dc.hvantoan.io.vn
     volumes:
-      - ./volumes/postgresql:/var/lib/postgresql/data
+      - /volumes/postgresql:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     deploy:
       resources:
         limits:
-          cpus: "0.3"
           memory: 512M
     networks:
       - nginx-proxy
+
   redis:
     image: redis:7.4
     container_name: redis_dc
@@ -63,7 +63,7 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - ./data:/data
+      - /volumes/redis:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf
     networks:
       - nginx-proxy
