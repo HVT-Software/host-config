@@ -9,7 +9,6 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./config/ftp.conf:/etc/nginx/conf.d/ftp.conf:ro
-      - /volumes/ftp/user/images:/var/html/images:ro
       - letsencrypt-certs:/etc/nginx/certs
       - letsencrypt-vhost-d:/etc/nginx/vhost.d
       - letsencrypt-html:/usr/share/nginx/html
