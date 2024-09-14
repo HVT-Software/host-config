@@ -12,6 +12,7 @@ services:
       - letsencrypt-certs:/etc/nginx/certs
       - letsencrypt-vhost-d:/etc/nginx/vhost.d
       - letsencrypt-html:/usr/share/nginx/html
+      - /volumes/ftp/user/images:/usr/share/nginx/html/images:ro
     networks:
       - nginx-proxy
       
