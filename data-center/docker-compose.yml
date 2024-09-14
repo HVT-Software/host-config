@@ -7,27 +7,20 @@ services:
     image: stilliard/pure-ftpd:hardened
     ports:
       - "21:21"
-      - "20:20"
-      - "30000-30009:30000-30009"
+      - "30000:30000"
     volumes:
       - "/volumes/ftp/user:/home/user/:rw"
       - "/volumes/ftp/pass:/etc/pure-ftpd/passwd"
     environment:
       # SSL Configuration
-      VIRTUAL_HOST: ftp.dc.hvantoan.io.vn
-      LETSENCRYPT_HOST: ftp.dc.hvantoan.io.vn
+      VIRTUAL_HOST: hvantoan.io.vn
+      LETSENCRYPT_HOST: hvantoan.io.vn
       # FTP Configuration
-      PUBLICHOST: "ftp.dc.hvantoan.io.vn"
+      PUBLICHOST: "hvantoan.io.vn"
       FTP_USER_NAME: "ftp"
       FTP_USER_PASS: "ftp"
       FTP_USER_HOME: "/home/user"
-      FTP_USER_UID: 33
-      FTP_USER_GID: 33
-      ADDED_FLAGS: "--tls=2"
-      TLS_CN: "**** FTP"
-      TLS_ORG: "*****"
-      TLS_C: "VI"
-      MAX_CONNECTIONS: "20"
+      PASSIVE_PORTS: "30000:30000" 
     networks:
       - nginx-proxy
 
