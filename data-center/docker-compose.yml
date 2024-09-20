@@ -35,14 +35,14 @@ services:
       VIRTUAL_HOST: database.dc.hvantoan.io.vn
       LETSENCRYPT_HOST: database.dc.hvantoan.io.vn
     volumes:
-      - /volumes/postgresql:/var/lib/postgresql/data/:rw
+      - postgres_data:/var/lib/postgresql/data/:rw
     ports:
       - "5432:5432"
     deploy:
       resources:
         limits:
-          cpus: "0.3"
-          memory: 512M
+          cpus: "0.5"
+          memory: 1024M
     networks:
       - nginx-proxy
 
@@ -60,6 +60,9 @@ services:
       - ./redis.conf:/usr/local/etc/redis/redis.conf
     networks:
       - nginx-proxy
+
+volumes:
+  postgres_data:
 
 networks:
   nginx-proxy:
