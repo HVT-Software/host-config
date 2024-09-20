@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 services:
   nginx-proxy:
     image: jwilder/nginx-proxy
@@ -8,14 +8,14 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./config/ftp.conf:/etc/nginx/conf.d/ftp.conf:ro
+      - ./config:/etc/nginx/conf.d:ro
       - letsencrypt-certs:/etc/nginx/certs
       - letsencrypt-vhost-d:/etc/nginx/vhost.d
       - letsencrypt-html:/usr/share/nginx/html
       - /volumes/ftp/user/images:/usr/share/nginx/html/images:ro
     networks:
       - nginx-proxy
-      
+
   letsencrypt-proxy:
     image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: letsencrypt-proxy
