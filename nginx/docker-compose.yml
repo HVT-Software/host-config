@@ -8,13 +8,9 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./vhost.d:/etc/nginx/vhost.d
-      - ./config:/etc/nginx/conf.d:ro
-      - ./config:/config:ro
       - letsencrypt-certs:/etc/nginx/certs
       - letsencrypt-html:/usr/share/nginx/html
-      - /volumes/ftp/user/images:/usr/share/nginx/html/images:ro
-    entrypoint: ["/bin/sh", "-c", "/config/entrypoint.sh && nginx -g 'daemon off;'"]
+      - /volumes/ftp/user/images:/usr/share/nginx/html/images:rw
     networks:
       - nginx-proxy
 
