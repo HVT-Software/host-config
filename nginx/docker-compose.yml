@@ -11,6 +11,10 @@ services:
       - letsencrypt-certs:/etc/nginx/certs
       - letsencrypt-html:/usr/share/nginx/html
       - /volumes/ftp/user/images:/usr/share/nginx/html/images:rw
+      # Added configuration for vhost and conf directories
+      - vhost:/etc/nginx/vhost.d
+      - conf:/etc/nginx/conf.d
+      - ./config:/etc/nginx/conf.d
     networks:
       - nginx-proxy
 
@@ -20,12 +24,14 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - letsencrypt-certs:/etc/nginx/certs
-      - letsencrypt-vhost-d:/etc/nginx/vhost.d
+      - vhost:/etc/nginx/vhost.d
       - letsencrypt-html:/usr/share/nginx/html
     environment:
       - DEFAULT_EMAIL=toan01473@gmail.com
       - NGINX_PROXY_CONTAINER=nginx-proxy
     networks:
+      - nginx-proxy
+    depends_on:
       - nginx-proxy
 
 networks:
@@ -34,5 +40,7 @@ networks:
 
 volumes:
   letsencrypt-certs:
-  letsencrypt-vhost-d:
   letsencrypt-html:
+  # Added named volumes for vhost and conf
+  vhost:
+  conf:
