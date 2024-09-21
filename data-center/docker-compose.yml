@@ -11,6 +11,7 @@ services:
     volumes:
       - "/volumes/ftp/user:/home/user/:rw"
       - "/volumes/ftp/pass:/etc/pure-ftpd/passwd"
+      - "/volumes/ftp/pub:/home/ftp/pub" # Directory for anonymous access
     environment:
       # SSL Configuration
       VIRTUAL_HOST: hvantoan.io.vn
@@ -20,6 +21,10 @@ services:
       FTP_USER_NAME: "ftp"
       FTP_USER_PASS: "ftp"
       FTP_USER_HOME: "/home/user"
+      # Allow anonymous access
+      ANONYMOUS_ENABLE: "yes" # Enable anonymous access
+      ANONYMOUS_UPLOAD: "no" # Allow anonymous uploads
+      ANONYMOUS_READ: "yes" # Allow anonymous read access
     networks:
       - nginx-proxy
 
