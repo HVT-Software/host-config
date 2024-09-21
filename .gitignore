@@ -5,3 +5,4 @@ tamduc/src/
 /ventures/volumes/pgadmin
 /data-center/data
 /data-center/volumes
+/nginx/vhost.d
