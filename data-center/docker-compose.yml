@@ -29,17 +29,17 @@ services:
       - nginx-proxy
 
   postgres:
-    image: postgres:latest
     container_name: postgres
+    image: postgres:14-alpine
     restart: always
     environment:
       POSTGRES_DB: ventures
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - 5432:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
     deploy:
       resources:
         limits:
