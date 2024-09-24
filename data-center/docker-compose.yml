@@ -29,18 +29,15 @@ services:
       - nginx-proxy
 
   postgres:
-    image: postgres:15-alpine
+    image: postgres:latest
     container_name: postgres
     restart: always
     environment:
+      POSTGRES_DB: ventures
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      PGDATA: /var/lib/postgresql/data/
-      # SSL Configuration
-      VIRTUAL_HOST: database.dc.hvantoan.io.vn
-      LETSENCRYPT_HOST: database.dc.hvantoan.io.vn
     volumes:
-      - postgres_data:/var/lib/postgresql/data/:rw
+      - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     deploy:
