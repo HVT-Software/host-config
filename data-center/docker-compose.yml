@@ -51,6 +51,7 @@ services:
   redis:
     image: redis:7.4
     container_name: redis_dc
+    restart: always
     command: redis-server /usr/local/etc/redis/redis.conf
     environment:
       - VIRTUAL_HOST=redis.dc.hvantoan.io.vn
