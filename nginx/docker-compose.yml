@@ -3,6 +3,7 @@ services:
   nginx-proxy:
     image: jwilder/nginx-proxy
     container_name: nginx-proxy
+    restart: always
     ports:
       - "80:80"
       - "443:443"
@@ -21,6 +22,7 @@ services:
   letsencrypt-proxy:
     image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: letsencrypt-proxy
+    restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - letsencrypt-certs:/etc/nginx/certs
