@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "jaeger/**"
+      - "version.json"
 
 jobs:
   deploy:

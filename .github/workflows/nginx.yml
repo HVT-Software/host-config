@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "nginx/**"
+      - "version.json"
 
 jobs:
   deploy:

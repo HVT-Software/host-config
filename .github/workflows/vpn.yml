@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "vpn/**"
+      - "version.json"
 
 jobs:
   deploy:
