@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'vpn/**'
+      - "vpn/**"
 
 jobs:
   deploy:
@@ -18,11 +18,17 @@ jobs:
       - name: Login to GitHub
         uses: actions/checkout@v2
 
-      - name: Rebuild Apps
+      - name: Rebuild VPN
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          port: 22
-          script: "eval `ssh-agent -s` && ssh-add ~/.ssh/github && cd ~/ctx/host-config && git pull && cd vpn && docker compose up --remove-orphans -d"
+          port: 24700
+          script: |
+            eval `ssh-agent -s`
+            ssh-add ~/.ssh/github
+            cd ~/ctx/host-config
+            git pull
+            cd vpn
+            docker compose up --remove-orphans -d
