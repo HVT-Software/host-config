@@ -30,6 +30,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: 123456789x@X
       VIRTUAL_HOST: pgadmin.hvantoan.io.vn
       LETSENCRYPT_HOST: pgadmin.hvantoan.io.vn
+    user: '$UID:$GID'
     ports:
       - "5050:5050"
     volumes:
