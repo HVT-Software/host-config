@@ -1,33 +1,6 @@
 version: "3.9"
 
 services:
-  ftp:
-    restart: always
-    container_name: ftpd-server
-    image: stilliard/pure-ftpd:hardened
-    ports:
-      - "21:21"
-      - "30000-30009:30000-30009"
-    volumes:
-      - "/volumes/ftp/user:/home/user/:rw"
-      - "/volumes/ftp/pass:/etc/pure-ftpd/passwd"
-      - "/volumes/ftp/pub:/home/ftp/pub" # Directory for anonymous access
-    environment:
-      # SSL Configuration
-      VIRTUAL_HOST: hvantoan.io.vn
-      LETSENCRYPT_HOST: hvantoan.io.vn
-      # FTP Configuration
-      PUBLICHOST: "hvantoan.io.vn"
-      FTP_USER_NAME: "ftp"
-      FTP_USER_PASS: "ftp"
-      FTP_USER_HOME: "/home/user"
-      # Allow anonymous access
-      ANONYMOUS_ENABLE: "yes" # Enable anonymous access
-      ANONYMOUS_UPLOAD: "no" # Allow anonymous uploads
-      ANONYMOUS_READ: "yes" # Allow anonymous read access
-    networks:
-      - nginx-proxy
-
   postgres:
     container_name: postgres
     image: postgres:14-alpine
@@ -36,8 +9,6 @@ services:
       POSTGRES_DB: hota
       POSTGRES_USER: hota
       POSTGRES_PASSWORD: 123456789x@X
-      VIRTUAL_HOST: database.dc.hvantoan.io.vn
-      LETSENCRYPT_HOST: database.dc.hvantoan.io.vn
     ports:
       - 5432:5432
     volumes:
@@ -47,6 +18,22 @@ services:
         limits:
           cpus: "0.5"
           memory: 1024M
+    networks:
+      - nginx-proxy
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: it.vantoan@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 123456789x@X
+      VIRTUAL_HOST: pgadmin.hvantoan.io.vn
+      LETSENCRYPT_HOST: pgadmin.hvantoan.io.vn
+    ports:
+      - "5050:80"
+    volumes:
+      - /volumes/pgadmin:/var/lib/pgadmin
     networks:
       - nginx-proxy
 
