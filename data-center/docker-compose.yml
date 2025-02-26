@@ -33,9 +33,11 @@ services:
     image: postgres:14-alpine
     restart: always
     environment:
-      POSTGRES_DB: ventures
-      POSTGRES_USER: ventures
+      POSTGRES_DB: hota
+      POSTGRES_USER: hota
       POSTGRES_PASSWORD: 123456789x@X
+      VIRTUAL_HOST: database.dc.hvantoan.io.vn
+      LETSENCRYPT_HOST: database.dc.hvantoan.io.vn
     ports:
       - 5432:5432
     volumes:
