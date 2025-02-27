@@ -8,3 +8,4 @@ tamduc/src/
 /nginx/vhost.d
 vpn/config
 nginx/config/default.conf
+.vscode/settings.json
