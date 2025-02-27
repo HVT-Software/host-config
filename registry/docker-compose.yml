@@ -9,8 +9,6 @@ services:
     environment:
       REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
       REGISTRY_HTTP_ADDR: 0.0.0.0:5000
-      VIRTUAL_HOST: registry.hvantoan.io.vn
-      LETSENCRYPT_HOST: registry.hvantoan.io.vn
     volumes:
       - /volumes/registry:/var/lib/registry
     restart: unless-stopped

@@ -28,4 +28,4 @@ jobs:
             git pull
             cd apps
             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
-            docker compose up --remove-orphans -d
+            # docker compose up --remove-orphans -d

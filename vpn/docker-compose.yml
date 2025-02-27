@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   wireguard:
     image: linuxserver/wireguard
@@ -7,9 +5,9 @@ services:
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
+    env_file:
+      - .env
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=Asia/Ho_Chi_Minh
       - SERVERURL=vpn.hvantoan.io.vn
       - SERVERPORT=51820

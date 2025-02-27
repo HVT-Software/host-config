@@ -1,6 +1,35 @@
-version: "3.9"
 
 services:
+  nginx-proxy-manager:
+    container_name: nginx-proxy-manager
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      # These ports are in format <host-port>:<container-port>
+      - '80:80' # Public HTTP Port
+      - '443:443' # Public HTTPS Port
+      - '81:81' # Admin Web Port
+      # Add any other Stream port you want to expose
+      # - '21:21' # FTP
+    environment:
+      INITIAL_ADMIN_EMAIL: it.vantoan@gmail.com
+      INITIAL_ADMIN_PASSWORD: 123456789x@X
+      # Postgres parameters:
+      DB_POSTGRES_HOST: "postgres"
+      DB_POSTGRES_PORT: 5432
+      DB_POSTGRES_USER: hota
+      DB_POSTGRES_PASSWORD: 123456789x@X
+      DB_POSTGRES_NAME: npm
+      # Uncomment this if IPv6 is not enabled on your host
+      # DISABLE_IPV6: 'true'
+    volumes:
+      - /volumes/data:/data
+      - /volumes/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - postgres
+    networks:
+      - nginx-proxy
+
   postgres:
     container_name: postgres
     image: postgres:14-alpine
@@ -28,13 +57,12 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: it.vantoan@gmail.com
       PGADMIN_DEFAULT_PASSWORD: 123456789x@X
-      VIRTUAL_HOST: pgadmin.hvantoan.io.vn
-      LETSENCRYPT_HOST: pgadmin.hvantoan.io.vn
     user: '$UID:$GID'
     ports:
-      - "5050:5050"
+      - "5050:80"
     volumes:
-      - /volumes/pgadmin:/var/lib/pgadmin
+      - /volumes/pgadmin/lib:/var/lib/pgadmin
+      - /volumes/pgadmin/log:/var/log/pgadmin
     networks:
       - nginx-proxy
 
@@ -43,9 +71,6 @@ services:
     container_name: redis_dc
     restart: always
     command: redis-server /usr/local/etc/redis/redis.conf
-    environment:
-      - VIRTUAL_HOST=redis.dc.hvantoan.io.vn
-      - LETSENCRYPT_HOST=redis.dc.hvantoan.io.vn
     ports:
       - "6379:6379"
     volumes:

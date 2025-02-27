@@ -6,3 +6,5 @@ tamduc/src/
 /data-center/data
 /data-center/volumes
 /nginx/vhost.d
+vpn/config
+nginx/config/default.conf
